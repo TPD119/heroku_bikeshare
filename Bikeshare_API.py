@@ -79,7 +79,7 @@ def BikerData():
 
 while(True):
     BikerData()
-    time.sleep(60)
+    time.sleep(300)
 
 
 
