@@ -1,1 +1,1 @@
-web: gunicorn app:Bikeshare_API
+web: gunicorn Bikeshare_API:app
