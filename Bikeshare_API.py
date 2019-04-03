@@ -7,13 +7,14 @@ import pandas as pd
 import datetime
 import time
 
+#Heroku Schedule
+from apscheduler.schedulers.blocking import BlockingScheduler
+sched = BlockingScheduler()
+
 #Prepare to load Data Frames with SQLAlchemy
 from sqlalchemy import create_engine
 import pymysql
 pymysql.install_as_MySQLdb()
-
-#from config import remote_db_endpoint, remote_db_port
-#from config import remote_gwsis_dbname, remote_gwsis_dbuser, remote_gwsis_dbpwd
 
 # AWS Database Info - Put in Config file!
 remote_db_endpoint = 'gwcodingbootcamp.cr0gccbv4ylw.us-east-2.rds.amazonaws.com'
@@ -29,6 +30,7 @@ engine = create_engine(f"mysql://{remote_gwsis_dbuser}:{remote_gwsis_dbpwd}@{rem
 # Create a remote database engine connection
 conn = engine.connect()
 
+@sched.scheduled_job('interval', minutes=3)
 def BikerData():
 
     url = "https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Transportation_WebMercator/MapServer/5/query?where=1%3D1&outFields=*&outSR=4326&f=json"
@@ -78,13 +80,7 @@ def BikerData():
     biker_df = pd.DataFrame(biker_data)
     biker_df.to_sql(name='bikeshare', if_exists='append', con=conn, index=False)
 
-def periodic_work(interval):
-    while(True):
-        BikerData()
-        time.sleep(interval)
-
-periodic_work(180)
-
+sched.start()
 
 
 
