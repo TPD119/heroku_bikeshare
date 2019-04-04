@@ -1,1 +1,1 @@
-web: gunicorn Bikeshare_API:app
+clock: python Bikeshare_API.py

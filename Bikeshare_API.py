@@ -9,13 +9,15 @@ import time
 
 #Heroku Schedule
 from apscheduler.schedulers.blocking import BlockingScheduler
-sched = BlockingScheduler()
+
 
 #Prepare to load Data Frames with SQLAlchemy
 from sqlalchemy import create_engine
 import pymysql
+
 pymysql.install_as_MySQLdb()
 
+sched = BlockingScheduler()
 # AWS Database Info - Put in Config file!
 remote_db_endpoint = 'gwcodingbootcamp.cr0gccbv4ylw.us-east-2.rds.amazonaws.com'
 remote_db_port = '3306'
