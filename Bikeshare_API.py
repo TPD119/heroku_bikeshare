@@ -80,7 +80,7 @@ def BikerData():
                 "locked":locked,"install_date":install_date,"removal_date":removal_date,"temp_install":temp_install}
     #print(biker_data["time"][0])
     biker_df = pd.DataFrame(biker_data)
-    biker_df.to_sql(name='bikeshare', if_exists='append', con=conn, index=False)
+    biker_df.to_sql(name='bikeshare_2', if_exists='append', con=conn, index=False)
 
 sched.start()
 
